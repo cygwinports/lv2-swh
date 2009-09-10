@@ -1,0 +1,29 @@
+--- origsrc/swh-lv2-1.0.15/Makefile	2008-01-09 15:02:08.000000000 -0600
++++ src/swh-lv2-1.0.15/Makefile	2009-09-10 10:44:04.077314300 -0500
+@@ -56,7 +56,7 @@ all: util gverb $(OBJECTS)
+ gverb: gverb/gverb.c gverb/gverbdsp.c gverb/gverb.o gverb/gverbdsp.o
+ 	(cd gverb && make -w CFLAGS="$(PLUGIN_CFLAGS)" LDFLAGS="$(PLUGIN_LDFLAGS)")
+ 
+-util: util/blo.o util/iir.o util/db.o util/rms.o
++util: util/blo.o util/iir.o util/db.o util/rms.o util/pitchscale.o
+ 
+ %.c: OBJ = $(shell echo $@ | sed 's/\.c$$/-@OS@.$(EXT)/')
+ %.c: %.xml
+--- origsrc/swh-lv2-1.0.15/extra.mk	2008-01-09 15:02:08.000000000 -0600
++++ src/swh-lv2-1.0.15/extra.mk	2009-09-10 10:48:36.075220300 -0500
+@@ -21,3 +21,4 @@ se4_LDFLAGS = util/db.o util/rms.o
+ 
+ mbeq_CFLAGS = `pkg-config fftw3f --cflags`
+ mbeq_LDFLAGS = `pkg-config fftw3f --libs`
++pitch_scale_LDFLAGS = util/pitchscale.o `pkg-config fftw3f --libs`
+--- origsrc/swh-lv2-1.0.15/util/pitchscale.c	2008-01-09 15:02:07.000000000 -0600
++++ src/swh-lv2-1.0.15/util/pitchscale.c	2009-09-10 10:43:46.003288100 -0500
+@@ -36,7 +36,7 @@
+ *****************************************************************************/
+ 
+ #include <string.h>
+-#include "../config.h"
++#define FFTW3
+ #include <math.h>
+ 
+ #include "pitchscale.h"

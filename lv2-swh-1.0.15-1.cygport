@@ -1,0 +1,19 @@
+ORIG_PN="swh-lv2"
+
+DESCRIPTION="SWH's collection of LV2 plugins"
+HOMEPAGE="http://plugin.org.uk/"
+SRC_URI="http://plugin.org.uk/lv2/${ORIG_PN}-${PV}.tar.gz"
+PATCH_URI="1.0.15-pitch_scale.patch"
+
+MAKEOPTS+=" OS=CYGWIN"
+
+src_compile() {
+	lndirs
+	cd ${B}
+	cygmake real-clean all
+}
+
+src_install() {
+	cd ${B}
+	cygmake install-system PREFIX=${D}/usr
+}

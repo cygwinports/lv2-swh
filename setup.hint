@@ -1,6 +1,0 @@
-category: Audio
-requires: libfftw3_3 libgcc1 lv2core
-sdesc: "SWH's collection of LV2 plugins"
-ldesc: "This is an early experimental port of the SWH LADSPA plugins to 
-the LV2 specification. It's still in development, but most things should 
-work as well or not as they did in LADSPA."

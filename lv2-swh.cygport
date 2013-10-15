@@ -1,0 +1,27 @@
+NAME="lv2-swh"
+VERSION=1.0.15
+RELEASE=1
+CATEGORY="Audio"
+SUMMARY="SWH's collection of LV2 plugins"
+DESCRIPTION="This is an early experimental port of the SWH LADSPA plugins to
+the LV2 specification. It's still in development, but most things should work
+as well or not as they did in LADSPA."
+REQUIRES="lv2"
+HOMEPAGE="http://plugin.org.uk/"
+SRC_URI="http://plugin.org.uk/lv2/swh-lv2-${VERSION}.tar.gz"
+SRC_DIR="swh-lv2-${VERSION}"
+PATCH_URI="1.0.15-pitch_scale.patch"
+
+MAKEOPTS+=" OS=CYGWIN"
+
+src_compile() {
+	lndirs
+	cd ${B}
+	cygmake real-clean
+	cygmake all
+}
+
+src_install() {
+	cd ${B}
+	cygmake install-system PREFIX=${D}/usr
+}
